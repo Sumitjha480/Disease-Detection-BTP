@@ -38,13 +38,13 @@ const showFile = () => {
   let fileType = file.type;
   let validExtensions = ["image/jpeg", "image/jpg", "image/png"];
   if (validExtensions.includes(fileType)) {
-    let fileReader = new FileReader();
-    fileReader.onload = () => {
-      let fileURL = fileReader.result;
-      let imgTag = `<img src="${fileURL}" alt="image" id="uploaded-image">`;
-      dropArea.innerHTML = imgTag;
-    };
-    fileReader.readAsDataURL(file);
+    // let fileReader = new FileReader();
+    // fileReader.onload = () => {
+    //   let fileURL = fileReader.result;
+    //   let imgTag = `<img src="${fileURL}" alt="image" id="uploaded-image">`;
+    //   dropArea.innerHTML = imgTag;
+    // };
+    // fileReader.readAsDataURL(file);
   } else {
     alert("This is not an Image File!");
     dropArea.classList.remove("active");
@@ -57,4 +57,4 @@ cancel.addEventListener("click", (e) => {
   dropArea.innerHTML = initialHTML;
 });
 
-form.addEventListener("submit", (e) => {});
+// form.addEventListener("submit", (e) => {});
