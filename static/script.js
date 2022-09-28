@@ -57,4 +57,6 @@ cancel.addEventListener("click", (e) => {
   dropArea.innerHTML = initialHTML;
 });
 
-// form.addEventListener("submit", (e) => {});
+form.addEventListener("submit", (e) => {
+  console.log()
+});

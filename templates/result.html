@@ -3,7 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+        <link rel="stylesheet" href={{url_for('static' , filename = 'css/normalize.css')}}>
+        <link rel="stylesheet" href={{url_for('static' , filename = 'css/grid.css')}}>
+        <link rel='stylesheet' href={{url_for('static' , filename = 'css/styleSucc.css')}}>
         <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap" rel="stylesheet" type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <title>Results Page</title>
@@ -19,11 +21,46 @@
                 font-size: 18px;
             }
         </style>
-
-</style>
     </head>
     <body>
-        <div>
+        <div class = "second-main">
+            <nav>
+                <ul style = "padding-right: 2%;" class = "main-nav">
+                    <li><a href ="/">HomePage</a></li>                
+                </ul>
+               
+            </nav>
+            <div class = "header">
+                <row style = "width: 100% ; display: flex; justify-content: center;">
+                    <h3 class="header-text">Uploaded Image</h3>
+                </row>
+                <row style = "width: 100% ; display: flex; justify-content: center;">
+                    <img class = "result-img" src={{url_for('static', filename = 'images/'+ img)}}>
+                </row>
+            </div>
+
+            <div class = "info">
+            
+                <row style = "width: 100% ; display: flex; justify-content: center;">
+                    <h3 class = "header-text">Model Prediction</h3>
+                </row>
+                <row style = "width: 100%; display: flex; justify-content: center;">
+                    <table class="table-bordered text-light table-custom">
+                        <tr>
+                            <th>Rank</th>
+                            <th>Disease Name</th>
+                        </tr>
+                        <tr>
+                            <td>1st</td>
+                            <td>{{predictions.class1}}</td>
+                          </tr>
+                    </table>
+                </row>
+                
+            </div>
+            
+        </div>
+        <!-- <div>
             <h2><a href ="/">HomePage</a></h2>                
             <div>
                 <h3>Uploaded Image</h3>
@@ -31,8 +68,9 @@
             </div>
             <div>
                 <h3>Model Prediction</h3>
-                <h3>Malanoma</h3>
+                <h3>{{predictions.class1}}</h3>
+                <h3>{{predictions.prob1}}</h3>
             </div>
-        </div>
+        </div> -->
     </body>
 </html>
