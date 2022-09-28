@@ -11,20 +11,21 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../static/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
   </head>
   <body>
-    <form action="" id="form">
+    <form action="/result" id="form" method="post" 
+    enctype = "multipart/form-data">
       <div class="drag-area">
         <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
         <header>Drag & Drop to Upload Image</header>
         <span>OR</span>
         <button class="btn" id="browseFile" type="button">Browse File</button>
-        <input type="file" id="diseaseImage" hidden />
+        <input type="file" id="diseaseImage" , name = "file"/>
       </div>
       <div class="col-md-12 text-center">
         <button id="Cancel" class="btn btn-danger mt-2">Cancel</button>
@@ -33,6 +34,6 @@
         </button>
       </div>
     </form>
-    <script src="script.js"></script>
+    <script src="../static/script.js"></script>
   </body>
 </html>

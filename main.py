@@ -1,42 +1,81 @@
-from fastapi import FastAPI, Request, UploadFile, File
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
-import uvicorn
-from src import const, preprocess
+from flask import Flask, request, render_template
 import os
-import shutil
-from pathlib import Path
-import json
+from keras.models import model_from_json
+from tensorflow.keras.preprocessing.image import load_img , img_to_array
 
-templates = Jinja2Templates(directory="./templates")
-
-app = FastAPI()
-
-# app.mount(
-#     "/static",
-#     StaticFiles(directory=Path(__file__).parent.parent.absolute() / "static"),
-#     name="static",
-# )
+app = Flask(__name__)
+app.config["DEBUG"] = True
 
 
-@app.get('/')
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+j_file = open('./model_param/model.json', 'r')
+loaded_json_model = j_file.read()
+j_file.close()
+model = model_from_json(loaded_json_model)
+model.load_weights('./model_param/model.h5')
 
 
-@app.post('/predict')
-async def predict(image: UploadFile = File(...)):
-    temp_file = save_to_disk(image, path="temp", save_as='temp')
-    result = preprocess.predict(temp_file)
-    with open(const.diagnosis_dir + const.diseases[result]+".json", 'r', encoding='utf-8') as f:
-    	diagnosis = json.load(f)
-    return diagnosis
-   
 
 
-def save_to_disk(uploadedfile, path='.', save_as='default'):
-    extension = os.path.splitext(uploadedfile.filename)[-1]
-    temp_file = os.path.join(path, save_as+extension)
-    with open(temp_file, 'wb') as buffer:
-        shutil.copyfileobj(uploadedfile.file, buffer)
-    return temp_file
+ALLOWED_EXT = set(['jpg' , 'jpeg' , 'png' , 'jfif'])
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in ALLOWED_EXT
+
+
+
+
+def predict(filename , model):
+    img = load_img(filename , target_size = (224, 224))
+    img = img_to_array(img)
+    img = img.reshape(1,224,224,3)
+
+    img = img.astype('float32')
+    img = img/255.0
+    result = model.predict(img)
+    return result
+
+
+
+
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return "<h1>404</h1><p>Page Not Found</p>", 404
+
+
+
+@app.route('/result', methods=['GET' , 'POST'])
+def result():
+    # return render_template('test.html')
+    target_img = os.path.join(os.getcwd() , 'static/images')
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            return render_template('test2.html')
+        elif (request.files):
+            file = request.files['file']
+            file.save(os.path.join(target_img , file.filename))
+            img_path = os.path.join(target_img , file.filename)
+            img = file.filename
+
+            # result = predict(img_path , model)
+            result = ["Sumit Jha"]
+            predictions = {
+                    "class1":result[0],
+                    "prob1":result[0],
+            }
+            return  render_template('result.html', img  = img , predictions = predictions )
+        else:
+            return render_template('test1.html')
+    else:
+            return render_template('test.html')
+
+
+
+
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
