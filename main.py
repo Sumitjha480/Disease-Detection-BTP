@@ -7,8 +7,8 @@ import json
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import model_from_json
 import numpy as np
-import tensorflow.keras.models as models
-from numpyencoder import NumpyEncoder
+# import tensorflow.keras.models as models
+# from numpyencoder import NumpyEncoder
 
 
 app = Flask(__name__)
