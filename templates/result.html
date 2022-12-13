@@ -9,7 +9,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;1,300&display=swap" rel="stylesheet" type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <title>Results Page</title>
-
         <style type="text/css">
             th{
                 text-align: center;
@@ -21,6 +20,14 @@
                 font-size: 18px;
             }
         </style>
+    <style>
+        .disinfo{
+            margin-top:50px;
+            width:80%;
+            height:500px;
+        }
+    
+    </style>
     </head>
     <body>
         <div class = "second-main">
@@ -47,25 +54,11 @@
                 <row style = "width: 100%; display: flex; justify-content: center;">
                     <table class="table-bordered text-light table-custom">
                         <tr>
-                            <!-- <th>Rank</th> -->
                             <th>Disease Name</th>
-                            <!-- <th>Prob</th> -->
                         </tr>
                         <tr>
-                            <!-- <td>1st</td> -->
                             <td>{{predictions.class1}}</td>
-                            <!-- <td>{{predictions.prob1}}</td> -->
                         </tr>
-                        <!-- <tr>
-                            <td>1st</td>
-                            <td>{{predictions.class2}}</td>
-                            <td>{{predictions.prob2}}</td>
-                        </tr>
-                        <tr>
-                            <td>1st</td>
-                            <td>{{predictions.class3}}</td>
-                            <td>{{predictions.prob3}}</td>
-                        </tr> -->
                     </table>
                 </row>
                 
@@ -84,5 +77,8 @@
                 <h3>{{predictions.prob1}}</h3>
             </div>
         </div> -->
+        <center>
+            <iframe src='https://www.diseaseinfosearch.org/search?term={{predictions.class1}}' class='disinfo'></iframe>
+        </center>
     </body>
 </html>
